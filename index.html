@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeri Foto Ningsih</title>
+    <style>
+        :root {
+            --pink-light: #ffd1dc;
+            --pink-medium: #ffa8ba;
+            --pink-dark: #ff85a1;
+            --blue-light: #a8d8ea;
+            --blue-medium: #7bc6e6;
+            --blue-dark: #5a9bc2;
+            --white: #ffffff;
+            --gray-light: #f5f5f5;
+            --text-dark: #333333;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--pink-light) 0%, var(--blue-light) 100%);
+            min-height: 100vh;
+            padding-bottom: 2rem;
+        }
+        
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--pink-dark);
+        }
+        
+        .logo span {
+            color: var(--blue-dark);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 1.5rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+        
+        nav a:hover {
+            color: var(--pink-dark);
+            background-color: var(--pink-light);
+        }
+        
+        .hero {
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: var(--text-dark);
+        }
+        
+        .album-section {
+            padding: 2rem 0;
+            background-color: var(--white);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--pink-dark);
+            font-size: 2rem;
+        }
+        
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            justify-items: center;
+        }
+        
+        .album-item {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            background-color: var(--gray-light);
+            width: 100%;
+            max-width: 320px;
+            cursor: pointer;
+        }
+        
+        .album-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .album-cover {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--pink-medium) 0%, var(--blue-medium) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .album-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .album-title {
+            padding: 1.2rem;
+            text-align: center;
+            background-color: var(--white);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .gallery-section {
+            display: none;
+            padding: 2rem 0;
+            background-color: var(--white);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .gallery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 0 1rem;
+        }
+        
+        .back-button {
+            background-color: var(--pink-medium);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 500;
+        }
+        
+        .back-button:hover {
+            background-color: var(--pink-dark);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.5rem;
+            padding: 0 1rem;
+        }
+        
+        .gallery-item {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            background-color: var(--gray-light);
+            aspect-ratio: 3/4;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        
+        .gallery-image {
+            width: 100%;
+            height: 75%;
+            background-color: var(--blue-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--blue-dark);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .gallery-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .gallery-caption {
+            padding: 0.8rem;
+            text-align: center;
+            background-color: var(--white);
+            height: 25%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+        }
+        
+        .music-section {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .music-title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--blue-dark);
+        }
+        
+        .music-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .music-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .music-input-label {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+        
+        .file-input-label {
+            background-color: var(--pink-medium);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+            font-weight: 500;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .file-input-label:hover {
+            background-color: var(--pink-dark);
+        }
+        
+        .file-name {
+            text-align: center;
+            color: var(--text-dark);
+            min-height: 1.5rem;
+        }
+        
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--white);
+            border-radius: 50px;
+            padding: 12px 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 100;
+        }
+        
+        .music-toggle {
+            background-color: var(--pink-medium);
+            color: white;
+            border: none;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: background-color 0.3s;
+        }
+        
+        .music-toggle:hover {
+            background-color: var(--pink-dark);
+        }
+        
+        .music-info {
+            font-size: 0.9rem;
+            font-weight: 500;
+            max-width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        footer {
+            background-color: var(--white);
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--pink-light);
+            color: var(--pink-dark);
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--pink-medium);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            color: var(--text-dark);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav li {
+                margin: 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .album-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+            
+            .music-player {
+                bottom: 10px;
+                right: 10px;
+                padding: 10px 15px;
+            }
+            
+            .gallery-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+        
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        a:focus, .music-toggle:focus, .back-button:focus, .album-item:focus, .file-input-label:focus {
+            outline: 2px solid var(--blue-dark);
+            outline-offset: 2px;
+        }
+        
+        .active {
+            display: block !important;
+        }
+        
+        /* Modal untuk foto besar */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content {
+            display: block;
+            margin: auto;
+            max-width: 90%;
+            max-height: 90%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+        
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        .close:hover {
+            color: var(--pink-medium);
+        }
+        
+        .modal-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-size: 1.2rem;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="sr-only">Skip to main content</a>
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Galeri <span>Ningsih</span></div>
+                <nav>
+                    <ul>
+                        <li><a href="#album">Album Foto</a></li>
+                        <li><a href="#music">Musik</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content">
+        <section class="hero">
+            <div class="container">
+                <h1>Galeri Foto NANA</h1>
+                <p>ada aib, ada teman, dan ada orang cakep</p>
+            </div>
+        </section>
+        
+        <!-- BAGIAN MUSIK DI ATAS -->
+        <section id="music" class="music-section">
+            <div class="container">
+                <h2 class="music-title">Musik Latar</h2>
+                <div class="music-controls">
+                    <div class="music-input-group">
+                        <label class="music-input-label">Pilih Musik:</label>
+                        <select id="musicSelect" class="file-input-label" style="cursor: pointer; text-align: center;">
+                            <option value="">-- Pilih Musik --</option>
+                            <option value="lagu1.mp3">Lagu Galau</option>
+                            <option value="lagu2.mp3">Lagu Sedih</option>
+                            <option value="lagu3.mp3">Lagu Emosi</option>
+                        </select>
+                        <div class="file-name" id="fileName">Belum ada musik dipilih</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="album" class="album-section active">
+            <div class="container">
+                <h2 class="section-title">yg buat album cakep banget</h2>
+                <div class="album-grid">
+                    <!-- Album 1: KAKAEND -->
+                    <div class="album-item" data-album="album1">
+                        <div class="album-cover">
+                            <img src="album1.jpeg" alt="Cover Album KAKAEND" onerror="this.style.display='none'">
+                        </div>
+                        <div class="album-title">AIBBBBBB</div>
+                    </div>
+                    
+                    <!-- Album 2: w friends -->
+                    <div class="album-item" data-album="album2">
+                        <div class="album-cover">
+                            <img src="album2.jpeg" alt="Cover Album w friends" onerror="this.style.display='none'">
+                        </div>
+                        <div class="album-title">W/FRIENDS</div>
+                    </div>
+                    
+                    <!-- Album 3: TANDAIN! -->
+                    <div class="album-item" data-album="album3">
+                        <div class="album-cover">
+                            <img src="album3.jpeg" alt="Cover Album TANDAIN!" onerror="this.style.display='none'">
+                        </div>
+                        <div class="album-title">TANDAIN!</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Album 1: KAKAEND -->
+        <section id="album1" class="gallery-section">
+            <div class="container">
+                <div class="gallery-header">
+                    <button class="back-button">← Kembali ke Album</button>
+                    <h2 class="section-title">jika itu bukan aib nining, maka aib yg lain</h2>
+                </div>
+                <div class="gallery-grid">
+                    <!-- Foto-foto album 1 -->
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="nining1.jpg" alt="Momen Bahagia 1" onerror="this.style.display='none'">
+                        </div>
+                        <div class="gallery-caption">her fotoin dong</div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="nining2.jpg" alt="Momen Bahagia 2" onerror="this.style.display='none'">
+                        </div>
+                        <div class="gallery-caption">ketawa dia</div>
+                    </div>
+                
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="nining3.jpg" alt="Momen Bahagia 3" onerror="this.style.display='none'">
+                        </div>
+                        <div class="gallery-caption">ea cekrek</div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="nining4.jpg" alt="Momen Bahagia 4" onerror="this.style.display='none'">
+                        </div>
+                        <div class="gallery-caption">tisu mana tisu</div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="nining5.jpg" alt="Momen Bahagia 5" onerror="this.style.display='none'">
+                        </div>
+                        <div class="gallery-caption">ini bagus ya?</div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="nining6.jpg" alt="Momen Bahagia 6" onerror="this.style.display='none'">
+                        </div>
+                        <div class="gallery-caption">capek keliling gusy</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Album 2: w friends -->
+        <section id="album2" class="gallery-section">
+            <div class="container">
+                <div class="gallery-header">
+                    <button class="back-button">← Kembali ke Album</button>
+                    <h2 class="section-title">w friends</h2>
+                </div>
+                <div class="gallery-grid">
+                    <!-- 12 Foto untuk album w friends -->
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="pren3.jpg" alt="Teman 1" onerror="this.style.display='none'">
+                        </div>
+                        <div class="gallery-caption">nining dan orang cakep</div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="pren7.jpg" alt="Teman 2" onerror="this.style.display='none'">
+                        </div>
+                        <div class="gallery-caption">nining dan orang cakep part 2</div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="pren11.jpg" alt="Teman 3" onerror="this.style.display='none'">
+                        </div>
+                        <div class="gallery-caption">hmm g ajak?</div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="pren1.jpg" alt="Teman 4" onerror="this.style.display='none'">
+                        </div>
+                        <div class="gallery-caption">omagaaa kita nonton</div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="pren2.jpg" alt="Teman 5" onerror="this.style.display='none'">
+                        </div>
+                        <div class="gallery-caption">sekolah itu lagi</div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="pren4.jpg" alt="Teman 6" onerror="this.style.display='none'">
+                        </div>
+                        <div class="gallery-caption">proker itu lagi</div>
+                    </div>
+                    
+                    <!-- Tambahan 6 foto untuk total 12 -->
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="pren5.jpg" alt="Teman 7" onerror="this.style.display='none'">
+                        </div>
+                        <div class="gallery-caption">posyandu</div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="pren8.jpg" alt="Teman 8" onerror="this.style.display='none'">
+                        </div>
+                        <div class="gallery-caption">lucunyaaa</div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="pren9.jpg" alt="Teman 9" onerror="this.style.display='none'">
+                        </div>
+                        <div class="gallery-caption">yang depan cakep pls</div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="pren10.jpg" alt="Teman 10" onerror="this.style.display='none'">
+                        </div>
+                        <div class="gallery-caption">eh ada adek lucu</div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="pren6.jpg" alt="Teman 11" onerror="this.style.display='none'">
+                        </div>
+                        <div class="gallery-caption">huuuuuu</div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="pren0.jpg" alt="Teman 12" onerror="this.style.display='none'">
+                        </div>
+                        <div class="gallery-caption">ada si ganteng</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Album 3: TANDAIN! -->
+        <section id="album3" class="gallery-section">
+            <div class="container">
+                <div class="gallery-header">
+                    <button class="back-button">← Kembali ke Album</button>
+                    <h2 class="section-title">hy?</h2>
+                </div>
+                <div class="gallery-grid">
+                    <!-- 8 Foto untuk album TANDAIN! -->
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="bagus1.jpg" alt="Momen Indah 1" onerror="this.style.display='none'">
+                        </div>
+                        <div class="gallery-caption">alamnya bagus</div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="bagus5.jpg" alt="Momen Indah 2" onerror="this.style.display='none'">
+                        </div>
+                        <div class="gallery-caption">nooo, ini alamnya bagus banget</div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="bagus7.jpg" alt="Momen Indah 3" onerror="this.style.display='none'">
+                        </div>
+                        <div class="gallery-caption">keren</div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="bagus8.jpg" alt="Momen Indah 4" onerror="this.style.display='none'">
+                        </div>
+                        <div class="gallery-caption">kemrennn</div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="bagus0.jpg" alt="Momen Indah 5" onerror="this.style.display='none'">
+                        </div>
+                        <div class="gallery-caption">ini bagus woiii</div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="bagus6.jpg" alt="Momen Indah 6" onerror="this.style.display='none'">
+                        </div>
+                        <div class="gallery-caption">apsh lu ikut-ikut</div>
+                    </div>
+                    
+                    <!-- Tambahan 2 foto untuk total 8 -->
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="bagus2.jpg" alt="Momen Indah 7" onerror="this.style.display='none'">
+                        </div>
+                        <div class="gallery-caption">omaga paparajii</div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="bagus4.jpg" alt="Momen Indah 8" onerror="this.style.display='none'">
+                        </div>
+                        <div class="gallery-caption">yg fotoin cakep</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Modal untuk foto besar -->
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div class="modal-caption" id="modalCaption"></div>
+    </div>
+    
+    <!-- PLAYER MUSIK -->
+    <div class="music-player">
+        <button class="music-toggle" id="playButton">▶️</button>
+        <div class="music-info" id="musicInfo">Pilih musik terlebih dahulu</div>
+        <audio id="backgroundMusic" loop></audio>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">Galeri <span>Ningsih</span></div>
+                <div class="social-links">
+                    <a href="#" aria-label="Instagram">📱</a>
+                    <a href="#" aria-label="Facebook">📘</a>
+                    <a href="#" aria-label="Twitter">🐦</a>
+                </div>
+                <p class="copyright">Koleksi kenangan untuk dikenang</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Musik latar
+            const audio = document.getElementById('backgroundMusic');
+            const playButton = document.getElementById('playButton');
+            const musicInfo = document.getElementById('musicInfo');
+            const musicSelect = document.getElementById('musicSelect');
+            const fileNameDisplay = document.getElementById('fileName');
+            
+            let isPlaying = false;
+            
+            // Fungsi untuk memuat musik dari pilihan
+            function loadMusicFromSelection() {
+                const selectedFile = musicSelect.value;
+                
+                if (selectedFile) {
+                    // Hentikan musik yang sedang diputar
+                    audio.pause();
+                    isPlaying = false;
+                    playButton.innerHTML = '▶️';
+                    
+                    // Perbarui sumber musik
+                    audio.src = selectedFile;
+                    fileNameDisplay.textContent = musicSelect.options[musicSelect.selectedIndex].text;
+                    musicInfo.textContent = `Memutar: ${musicSelect.options[musicSelect.selectedIndex].text}`;
+                    
+                    // Coba putar musik baru
+                    const playPromise = audio.play();
+                    
+                    if (playPromise !== undefined) {
+                        playPromise.then(() => {
+                            isPlaying = true;
+                            playButton.innerHTML = '⏸️';
+                        }).catch(error => {
+                            console.log('Autoplay diblokir, klik tombol play manual');
+                            musicInfo.textContent = 'Klik tombol play untuk memulai musik';
+                        });
+                    }
+                }
+            }
+            
+            // Event listener untuk select musik
+            musicSelect.addEventListener('change', function() {
+                loadMusicFromSelection();
+            });
+            
+            // Tombol play/pause
+            playButton.addEventListener('click', function() {
+                if (audio.src) {
+                    if (isPlaying) {
+                        audio.pause();
+                        playButton.innerHTML = '▶️';
+                    } else {
+                        audio.play().then(() => {
+                            playButton.innerHTML = '⏸️';
+                        }).catch(error => {
+                            console.log('Gagal memutar musik:', error);
+                        });
+                    }
+                    isPlaying = !isPlaying;
+                } else {
+                    alert('Silakan pilih musik terlebih dahulu');
+                }
+            });
+            
+            // Navigasi album
+            const albumItems = document.querySelectorAll('.album-item');
+            const albumSection = document.getElementById('album');
+            const gallerySections = document.querySelectorAll('.gallery-section');
+            const backButtons = document.querySelectorAll('.back-button');
+            
+            // Fungsi untuk menampilkan foto satu per satu dengan animasi
+            function animateGalleryItems() {
+                const galleryItems = document.querySelectorAll('.gallery-item');
+                galleryItems.forEach((item, index) => {
+                    // Atur delay untuk setiap item
+                    item.style.animationDelay = `${index * 0.1}s`;
+                });
+            }
+            
+            albumItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const albumId = this.getAttribute('data-album');
+                    
+                    // Sembunyikan semua section
+                    albumSection.classList.remove('active');
+                    gallerySections.forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    
+                    // Tampilkan album yang dipilih
+                    const selectedAlbum = document.getElementById(albumId);
+                    selectedAlbum.classList.add('active');
+                    
+                    // Terapkan animasi untuk foto-foto di album yang dipilih
+                    setTimeout(animateGalleryItems, 100);
+                });
+            });
+            
+            backButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Sembunyikan semua gallery section
+                    gallerySections.forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    
+                    // Tampilkan album section
+                    albumSection.classList.add('active');
+                });
+            });
+            
+            // Modal untuk foto besar
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const modalCaption = document.getElementById('modalCaption');
+            const closeBtn = document.getElementsByClassName('close')[0];
+            
+            // Tambahkan event listener untuk semua gambar di galeri
+            document.querySelectorAll('.gallery-image img').forEach(img => {
+                img.addEventListener('click', function() {
+                    modal.style.display = 'block';
+                    modalImg.src = this.src;
+                    modalCaption.textContent = this.parentElement.nextElementSibling.textContent;
+                });
+            });
+            
+            // Tutup modal saat tombol close diklik
+            closeBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+            
+            // Tutup modal saat klik di luar gambar
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // Animasi untuk elemen saat halaman dimuat
+            setTimeout(() => {
+                document.querySelectorAll('.album-item').forEach((item, index) => {
+                    item.style.animationDelay = `${index * 0.2}s`;
+                    item.classList.add('fadeInUp');
+                });
+            }, 300);
+        });
+    </script>
+</body>
+</html>
